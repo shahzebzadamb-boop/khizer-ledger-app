@@ -21,7 +21,14 @@ function initials(name: string) {
 export default function ClientsPage() {
   const { state } = useLedger();
   const [addOpen, setAddOpen] = useState(false);
-  const clients = [...state.clients].sort((a, b) => a.name.localeCompare(b.name));
+  const [query, setQuery] = useState("");
+  const clients = [...state.clients]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter((client) => {
+      const needle = query.trim().toLowerCase();
+      if (!needle) return true;
+      return client.name.toLowerCase().includes(needle) || (client.phone ?? "").toLowerCase().includes(needle);
+    });
 
   return (
     <div className="space-y-4">
@@ -30,16 +37,23 @@ export default function ClientsPage() {
         subtitle="Phone is the customer ID."
         actions={
           <Button variant="primary" onClick={() => setAddOpen(true)}>
-            + Add Client
+            + Add
           </Button>
         }
       />
+      <input
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        placeholder="Search name or phone"
+        aria-label="Search clients"
+        className="px-3"
+      />
       {clients.length === 0 ? (
         <p className="rounded-2xl border border-border bg-surface px-3.5 py-3 text-sm font-normal text-muted">
-          No clients yet.
+          {query.trim() ? "No matching clients." : "No clients yet."}
         </p>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-border bg-surface">
+        <div className="kh-feed">
           {clients.map((client) => {
             const profile = clientProfile(client.id, state);
             const pending = profile.currentlyPending > 0;
@@ -49,7 +63,7 @@ export default function ClientsPage() {
                 href={`/clients/${client.id}`}
                 className="flex min-h-14 items-center gap-3 border-b border-border px-3 py-2.5 last:border-b-0"
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-input text-[11px] font-semibold text-secondary">
+                <span className="kh-avatar">
                   {initials(client.name) || "—"}
                 </span>
                 <div className="min-w-0 flex-1">

@@ -92,8 +92,8 @@ export function ApartmentsSettings({
   return (
     <section className="space-y-3">
       <div>
-        <h2 className="section-title">Apartments</h2>
-        <p className="mt-1 text-sm font-normal text-muted">Manage the apartments used in KHIZER LEDGER</p>
+        <h2 className="section-title">Active Apartments</h2>
+        <p className="mt-1 text-sm font-normal text-muted">Add the properties Khizer manages</p>
       </div>
       <Button variant="primary" className="w-full" onClick={openAdd}>
         + Add Apartment

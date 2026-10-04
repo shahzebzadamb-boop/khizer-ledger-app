@@ -139,12 +139,12 @@ export function LedgerPage() {
         </Button>
       </div>
       <h1 className="page-title">Ledger</h1>
-      <div className="flex gap-1 overflow-x-auto">
+      <div className="kh-tabs">
         {tabs.map((tab) => (
           <button
             key={tab.view}
             type="button"
-            className={cn("chip", view === tab.view && "chip-active")}
+            className={cn("kh-tab", view === tab.view && "is-active")}
             onClick={() => go({ view: tab.view })}
           >
             {tab.label}
@@ -220,7 +220,7 @@ export function LedgerPage() {
 }
 
 function List({ children }: { children: React.ReactNode }) {
-  return <div className="overflow-hidden rounded-2xl border border-border bg-surface">{children}</div>;
+  return <div className="kh-feed">{children}</div>;
 }
 
 function Empty({ label, action, onAction }: { label: string; action?: string; onAction?: () => void }) {
@@ -254,7 +254,7 @@ function PaymentList({
           >
             <p className="text-sm font-medium">{row.clientName}</p>
             <p className="mt-0.5 text-xs font-normal text-muted">{row.flat}</p>
-            <p className="money mt-2 text-base text-primary">{formatPKR(row.amount)}</p>
+            <p className="money mt-1 text-right text-base text-success">{formatPKR(row.amount)}</p>
             <p className="mt-1 text-xs font-normal text-muted">
               {row.method} · Received by {row.receivedBy}
             </p>

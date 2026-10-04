@@ -3,14 +3,14 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "https://khizer.shahzebzada.net/",
-    name: "KHIZER LEDGER",
-    short_name: "KHIZER LEDGER",
-    description: "Client money management and accounting",
+    name: "Khizer Ledger",
+    short_name: "Khizer",
+    description: "Property ledger",
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#111214",
-    theme_color: "#111214",
+    background_color: "#030D18",
+    theme_color: "#030D18",
     icons: [
       {
         src: "/icons/icon-192.png",

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { availableForWithdrawal, matchClient, paymentStayChoices, uniquePaymentStayId } from "@/lib/ledger";
@@ -121,7 +121,7 @@ function ConfirmBody({ parsed }: { parsed: ConfirmableDraft }) {
   }
   return (
     <>
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted">Anas withdrawal</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted">Withdrawal</p>
       <Field label="Amount" value={formatPKR(parsed.amount)} />
     </>
   );
@@ -279,12 +279,10 @@ export function QuickEntry({ onAdded }: { onAdded: (info?: AddedReceiptInfo) => 
   }
 
   return (
-    <Card className="space-y-3">
-      <div className="flex items-center justify-between gap-3">
+    <Card className="kh-panel space-y-3">
+      <div>
         <h2 className="section-title">Quick Entry</h2>
-        <Link href="/calculator" className="text-sm font-normal text-muted">
-          Calculator
-        </Link>
+        <p className="mt-0.5 text-xs font-normal text-muted">Tell Khizer Ledger what happened</p>
       </div>
       <form onSubmit={onSubmit} className="space-y-3">
         <label className="sr-only" htmlFor="quick-entry">
@@ -294,9 +292,9 @@ export function QuickEntry({ onAdded }: { onAdded: (info?: AddedReceiptInfo) => 
           id="quick-entry"
           ref={inputRef}
           value={text}
-          rows={2}
+          rows={4}
           placeholder={PLACEHOLDER}
-          className="w-full resize-none rounded-xl border border-border bg-input px-3 py-3 text-base"
+          className="min-h-28 w-full resize-none rounded-2xl border border-border bg-input px-3.5 py-3 text-base"
           onChange={(event) => {
             setText(event.target.value);
             setParsed(null);
@@ -312,8 +310,29 @@ export function QuickEntry({ onAdded }: { onAdded: (info?: AddedReceiptInfo) => 
             }
           }}
         />
+        <div className="kh-seg-scroll">
+          {["20k received", "Electric bill 8k", "2 nights 40k"].map((example) => (
+            <button
+              key={example}
+              type="button"
+              className="chip"
+              onClick={() => {
+                setText(example);
+                setParsed(null);
+                setStayId(null);
+                setCorrectionId(null);
+                setError(null);
+                setSaveFailed(false);
+                inputRef.current?.focus();
+              }}
+            >
+              {example}
+            </button>
+          ))}
+        </div>
         <Button type="submit" variant="primary" className="w-full" disabled={!text.trim()}>
           Process
+          <ArrowRight size={16} />
         </Button>
       </form>
 

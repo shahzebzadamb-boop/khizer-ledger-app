@@ -15,7 +15,7 @@ export function Badge({
         tone === "neutral" && "bg-input text-secondary",
         tone === "danger" && "bg-input text-danger",
         tone === "warning" && "bg-input text-warning",
-        tone === "success" && "bg-input text-primary",
+        tone === "success" && "bg-input text-success",
       )}
     >
       {children}

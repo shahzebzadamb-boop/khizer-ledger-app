@@ -11,8 +11,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const calculator = pathname === "/calculator";
 
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-lg min-w-0 bg-background">
-      <main className={calculator ? "min-h-dvh px-0 pb-0 pt-0" : "px-4 pb-32 pt-4"}>{children}</main>
+    <div className="mx-auto min-h-dvh w-full max-w-lg min-w-0">
+      <main className={calculator ? "min-h-dvh px-0 pb-0 pt-0" : "kh-enter px-4 pb-28 pt-3"}>{children}</main>
       {calculator ? null : <BottomNav />}
       {calculator ? null : <NotificationEngine />}
       <ServiceWorkerRegister />

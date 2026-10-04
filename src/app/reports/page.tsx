@@ -81,10 +81,17 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-4">
-      <PageHeader title="Reports" subtitle="Formal monthly reports. Home can also switch months." />
-      <Link href="/reports/receipts" className="inline-flex min-h-11 items-center text-sm font-medium text-secondary">
-        Receipts
-      </Link>
+      <PageHeader title="Reports" subtitle="Monthly performance" />
+      <div className="kh-group">
+        <Link href="/ledger" className="flex min-h-14 items-center justify-between border-b border-border px-3.5 text-sm font-medium">
+          <span>Ledger</span>
+          <span className="text-muted">›</span>
+        </Link>
+        <Link href="/reports/receipts" className="flex min-h-14 items-center justify-between px-3.5 text-sm font-medium">
+          <span>Receipts</span>
+          <span className="text-muted">›</span>
+        </Link>
+      </div>
       <MonthlyReports state={state} />
       <DateFilter
         flats={activeFlats(state)}

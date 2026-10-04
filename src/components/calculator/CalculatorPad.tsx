@@ -35,16 +35,16 @@ export function CalculatorPad() {
   }, []);
 
   return (
-    <div className="flex w-full flex-col bg-background px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">
+    <div className="flex w-full flex-1 flex-col bg-background px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">
       <div className="flex h-36 w-full items-end justify-end py-3">
         <p
-          className="w-full text-right font-sans font-light leading-none tracking-tight text-[#f5f5f7] [font-variant-numeric:tabular-nums]"
+          className="money w-full text-right font-sans leading-none tracking-tight text-foreground"
           style={{ fontSize: display.length > 8 ? "2.4rem" : display.length > 6 ? "2.9rem" : "3.4rem" }}
         >
           {display}
         </p>
       </div>
-      <div className="grid w-full grid-cols-4 gap-3">
+      <div className="mt-auto grid w-full grid-cols-4 gap-3">
         {KEYS.map((item) => (
           <button
             key={item.key}
@@ -52,12 +52,12 @@ export function CalculatorPad() {
             aria-label={item.label}
             onClick={() => press(item.key)}
             className={cn(
-              "flex h-[4.35rem] items-center justify-center rounded-full text-[1.7rem] font-medium text-[#f5f5f7] active:opacity-70",
+              "kh-press flex h-[4.35rem] items-center justify-center rounded-full text-[1.7rem] font-medium text-foreground",
               item.kind === "zero" && "col-span-2 justify-start pl-8",
-              item.kind === "num" && "bg-[#2c3036]",
-              item.kind === "zero" && "bg-[#2c3036]",
-              item.kind === "util" && "bg-[#5a616c] text-[#111214]",
-              item.kind === "op" && "bg-[#e8923a] text-white",
+              item.kind === "num" && "bg-nav",
+              item.kind === "zero" && "bg-nav",
+              item.kind === "util" && "bg-input text-secondary",
+              item.kind === "op" && "kh-calc-op",
               state.op === item.key && state.fresh && "brightness-125",
             )}
           >

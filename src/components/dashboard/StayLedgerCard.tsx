@@ -12,6 +12,15 @@ import { PaymentReceiptLink } from "@/components/receipts/PaymentReceiptLink";
 import { PaymentReceiptNotice } from "@/components/receipts/PaymentReceiptNotice";
 import { AddPaymentSheet } from "@/components/ledger/AddPaymentSheet";
 
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  const mark = parts
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+  return mark || "—";
+}
+
 function MoneyRow({ label, value, accent }: { label: string; value: number; accent?: string }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
@@ -64,30 +73,26 @@ export function StayLedgerCard({
         }}
         aria-expanded={open}
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-sm font-medium">{row.clientName}</p>
+        <div className="flex items-start gap-3">
+          <span className="kh-avatar">{initials(row.clientName)}</span>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-3">
+              <p className="truncate text-sm font-semibold">{row.clientName}</p>
+              <p className="money shrink-0 text-sm">{formatPKR(row.business)}</p>
+            </div>
             {showPhone && row.phone ? (
               <p className="mt-0.5 text-xs font-normal text-muted">{displayPhone(row.phone)}</p>
             ) : null}
             <p className="mt-0.5 text-xs font-normal text-muted">
               {showFlat ? `${row.flat} · ` : ""}
               {row.nights} night{row.nights === 1 ? "" : "s"}
+              {showDates || !showFlat ? ` · ${formatStayDates(row.checkIn, row.checkOut).replace(" – ", " → ")}` : ""}
             </p>
-            {showDates || !showFlat ? (
-              <p className="mt-0.5 text-xs font-normal text-muted">
-                {formatStayDates(row.checkIn, row.checkOut).replace(" – ", " → ")}
-              </p>
-            ) : null}
+            <p className="mt-0.5 text-xs font-normal text-muted">
+              Received {formatPKR(row.received)} · Pending{" "}
+              <span className={row.pending > 0 ? "text-warning" : undefined}>{formatPKR(row.pending)}</span>
+            </p>
           </div>
-          <p className={cn("shrink-0 text-[11px] font-medium", row.pending > 0 ? "text-warning" : "text-muted")}>
-            {row.status}
-          </p>
-        </div>
-        <div className="mt-2 space-y-1">
-          <MoneyRow label="Business" value={row.business} />
-          <MoneyRow label="Received" value={row.received} accent="text-primary" />
-          <MoneyRow label="Pending" value={row.pending} accent={row.pending > 0 ? "text-warning" : undefined} />
         </div>
         {row.methods.length > 0 ? (
           <p className="mt-2 text-xs font-normal text-muted">

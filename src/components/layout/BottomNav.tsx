@@ -17,16 +17,16 @@ export function BottomNav() {
   const router = useRouter();
 
   return (
-    <nav className="fixed bottom-0 left-1/2 z-40 w-full max-w-lg -translate-x-1/2 border-t border-border bg-nav pb-[env(safe-area-inset-bottom)]">
-      <ul className="grid grid-cols-5 items-end">
+    <nav className="kh-tabbar" aria-label="Primary">
+      <ul className="grid grid-cols-5 items-end px-1 pb-1 pt-1">
         {sideItems.slice(0, 2).map((item) => (
           <NavLink key={item.href} {...item} active={item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)} />
         ))}
-        <li className="flex justify-center pb-2">
+        <li className="flex justify-center">
           <button
             type="button"
             aria-label="Quick Entry"
-            className="mb-1 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-2xl font-semibold text-on-primary"
+            className="kh-plus kh-press"
             onClick={() => {
               if (pathname !== "/") router.push("/?entry=1");
               window.dispatchEvent(new Event("focus-quick-entry"));
@@ -59,11 +59,12 @@ function NavLink({
       <Link
         href={href}
         className={cn(
-          "flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium",
-          active ? "text-foreground" : "text-muted",
+          "flex min-h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-medium",
+          active ? "kh-nav-active" : "text-muted",
         )}
       >
-        <Icon size={22} strokeWidth={active ? 2.2 : 1.8} />
+        <Icon size={20} strokeWidth={active ? 2.3 : 1.8} />
+        {active ? <span className="kh-nav-light" /> : <span className="h-0.5" />}
         {label}
       </Link>
     </li>

@@ -37,6 +37,8 @@ yarn-error.log*
 # local database dumps — never commit customer data
 /backups/
 *.sql.gz
+src.zip
+scripts/historical_validation.json
 
 # spreadsheet copies and import dumps — MySQL is the source of truth
 *.xlsx

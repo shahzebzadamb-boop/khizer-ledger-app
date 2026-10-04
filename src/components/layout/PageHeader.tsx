@@ -12,23 +12,19 @@ export function PageHeader({
   logo?: boolean;
 }) {
   return (
-    <header className="mb-4 flex items-start justify-between gap-3">
-      <div className="flex min-w-0 items-start gap-2.5">
+    <header className="mb-3 flex items-center justify-between gap-3">
+      <div className="flex min-w-0 items-center gap-2.5">
         {logo ? (
-          <img
-            src="/logo-mark.png"
-            alt=""
-            width={40}
-            height={40}
-            className="mt-0.5 h-10 w-10 shrink-0 object-contain"
-          />
+          <span className="kh-logo-plate">
+            <img src="/branding/khizer-logo.png" alt="" width={44} height={44} />
+          </span>
         ) : null}
         <div className="min-w-0">
           <h1 className="page-title">{title}</h1>
-          {subtitle ? <p className="mt-1 text-sm font-normal text-muted">{subtitle}</p> : null}
+          {subtitle ? <p className="mt-0.5 text-xs font-normal tracking-wide text-muted">{subtitle}</p> : null}
         </div>
       </div>
-      {actions ? <div className="shrink-0">{actions}</div> : null}
+      {actions ? <div className="flex shrink-0 items-center">{actions}</div> : null}
     </header>
   );
 }

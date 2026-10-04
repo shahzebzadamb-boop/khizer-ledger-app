@@ -54,7 +54,7 @@ function ReportsReceiptsInner() {
       <Link href="/reports" className="inline-flex min-h-11 items-center text-sm font-medium text-secondary">
         ← Reports
       </Link>
-      <PageHeader title="Receipts" subtitle="Capital Lagoon payment receipts" />
+      <PageHeader title="Receipts" subtitle="Payment documents" />
       <div className="flex gap-2 overflow-x-auto pb-1">
         {(
           [

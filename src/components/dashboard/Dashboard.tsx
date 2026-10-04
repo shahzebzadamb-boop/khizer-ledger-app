@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { Calculator, Settings } from "lucide-react";
 import { DateFilter } from "@/components/dashboard/DateFilter";
 import { MonthFilter } from "@/components/dashboard/MonthFilter";
 import { NeedsAttention } from "@/components/dashboard/NeedsAttention";
@@ -20,7 +21,6 @@ import {
   type HomePeriod,
 } from "@/lib/home-period";
 import { dashboardTotals, needsAttention, stayLedgerRows } from "@/lib/ledger";
-import { canUseBrowserNotifications } from "@/lib/notifications";
 import { useLedger } from "@/lib/store";
 import { PaymentReceiptNotice } from "@/components/receipts/PaymentReceiptNotice";
 
@@ -56,32 +56,23 @@ export function Dashboard() {
       ) : null}
       <PageHeader
         title="KHIZER LEDGER"
-        subtitle="Fast mobile cash notebook"
+        subtitle="Property Ledger"
         logo
+        actions={
+          <>
+            <Link href="/calculator" className="icon-btn" aria-label="Calculator">
+              <Calculator size={20} />
+            </Link>
+            <Link href="/settings" className="icon-btn" aria-label="Settings">
+              <Settings size={20} />
+            </Link>
+          </>
+        }
       />
-      <div className="flex gap-2 overflow-x-auto pb-0.5">
-        <Link href="/settings" className="chip chip-active">
-          Settings
-        </Link>
-        <Link href="/calculator" className="chip chip-active">
-          Calculator
-        </Link>
-        <Link href="/ledger" className="chip chip-active">
-          Ledger
-        </Link>
-        <Link href="/reports/receipts" className="chip chip-active">
-          Receipts
-        </Link>
-      </div>
       {reviewCount > 0 ? (
-        <Link href="/migration" className="chip min-h-11 text-warning">
+        <Link href="/migration" className="text-sm font-medium text-warning">
           Migration review ({reviewCount})
         </Link>
-      ) : null}
-      {canUseBrowserNotifications() && Notification.permission !== "granted" ? (
-        <button type="button" className="chip" onClick={() => Notification.requestPermission()}>
-          Enable reminders
-        </button>
       ) : null}
       <MonthFilter period={period} onChange={setPeriod} state={state} />
       <SummaryCards

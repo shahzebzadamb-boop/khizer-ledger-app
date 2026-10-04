@@ -1,4 +1,4 @@
-import { LETTERHEAD_SRC, type ReceiptView } from "@/lib/receipts";
+import type { ReceiptView } from "@/lib/receipts";
 import { formatPKR } from "@/lib/money";
 
 function Row({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
@@ -36,29 +36,19 @@ export function ReceiptDocument({ view }: { view: ReceiptView }) {
         colorScheme: "light",
       }}
     >
-      <img
-        src={LETTERHEAD_SRC}
-        alt="Capital Lagoon Luxury Living letterhead"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "210mm",
-          height: "auto",
-          display: "block",
-          pointerEvents: "none",
-        }}
-      />
       <section
         style={{
-          position: "absolute",
-          top: "90mm",
-          left: "14mm",
-          right: "14mm",
-          bottom: "56mm",
-          overflow: "hidden",
+          padding: "16mm 14mm 18mm",
         }}
       >
+        <img
+          src="/branding/khizer-logo.png"
+          alt=""
+          style={{ display: "block", width: "28mm", height: "28mm", margin: "0 auto 4mm", objectFit: "contain" }}
+        />
+        <p style={{ margin: 0, textAlign: "center", fontSize: "11pt", fontWeight: 700, letterSpacing: "0.12em" }}>
+          KHIZER LEDGER
+        </p>
         <p
           style={{
             margin: 0,

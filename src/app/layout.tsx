@@ -6,14 +6,14 @@ import { LedgerProvider } from "@/lib/store";
 export const metadata: Metadata = {
   metadataBase: new URL("https://khizer.shahzebzada.net"),
   title: "KHIZER LEDGER",
-  description: "Client money management and accounting",
-  applicationName: "KHIZER LEDGER",
+  description: "Property ledger",
+  applicationName: "Khizer Ledger",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "KHIZER LEDGER",
-    description: "Client money management and accounting",
+    title: "Khizer Ledger",
+    description: "Property ledger",
     url: "https://khizer.shahzebzada.net",
     siteName: "KHIZER LEDGER",
     type: "website",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "KHIZER LEDGER",
+    title: "Khizer Ledger",
     statusBarStyle: "black-translucent",
   },
   formatDetection: {
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#111214",
+  themeColor: "#030D18",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

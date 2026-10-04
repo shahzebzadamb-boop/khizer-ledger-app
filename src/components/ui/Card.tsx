@@ -9,13 +9,6 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section
-      className={cn(
-        "rounded-2xl border border-border bg-surface p-3.5",
-        className,
-      )}
-    >
-      {children}
-    </section>
+    <section className={cn("rounded-2xl border border-border bg-surface p-3.5", className)}>{children}</section>
   );
 }

@@ -48,7 +48,7 @@ export default function ExpensesPage() {
 
   return (
     <div className="space-y-4">
-      <PageHeader title="Expenses" subtitle="Business costs only. Not Anas withdrawals." />
+      <PageHeader title="Expenses" subtitle="Business costs" />
       <Card className="p-3">
         <p className="card-label">Total</p>
         <p className="money mt-1.5 text-xl">{formatPKR(total)}</p>

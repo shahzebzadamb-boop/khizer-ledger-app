@@ -32,22 +32,20 @@ export function MonthFilter({
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center gap-1">
+      <div className="kh-period">
         <button
           type="button"
-          className="chip px-3"
           disabled={!canGoPrevMonth(period, months)}
           onClick={() => onChange(stepHomeMonth(period, months, -1))}
           aria-label="Previous month"
         >
           ‹
         </button>
-        <button type="button" className="chip chip-active min-w-0 flex-1 justify-center" onClick={() => setOpen((value) => !value)}>
-          {label} ▾
+        <button type="button" className="kh-period-label" onClick={() => setOpen((value) => !value)}>
+          {label}
         </button>
         <button
           type="button"
-          className="chip px-3"
           disabled={!canGoNextMonth(period, months)}
           onClick={() => onChange(stepHomeMonth(period, months, 1))}
           aria-label="Next month"

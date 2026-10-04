@@ -10,8 +10,15 @@ export function Sheet({
   children: ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center">
-      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-4">
+    <div className="kh-sheet-backdrop" onClick={onClose}>
+      <div
+        className="kh-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="kh-sheet-grab" aria-hidden="true" />
         <div className="mb-3 flex items-center justify-between gap-3">
           <h3 className="section-title">{title}</h3>
           <button type="button" className="min-h-11 text-sm font-medium text-secondary" onClick={onClose}>

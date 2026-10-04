@@ -32,9 +32,9 @@ export function DateFilter({
 }) {
   return (
     <div className="min-w-0 space-y-2.5">
-      <div className="flex flex-wrap gap-2">
+      <div className="kh-seg-scroll">
         <Chip active={selectedFlat === "all"} onClick={() => onFlat("all")}>
-          All Flats
+          All
         </Chip>
         {flats.map((flat) => (
           <Chip key={flat.id} active={selectedFlat === flat.name} onClick={() => onFlat(flat.name)}>
