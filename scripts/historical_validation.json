@@ -1,0 +1,90 @@
+{
+  "source": "Downloads XLSX via scripts/import_legacy.py",
+  "xlsx": {
+    "802-A": {
+      "file": "802 Booking-2026.xlsx",
+      "rows": 56
+    },
+    "408-B": {
+      "file": "408 B block.xlsx",
+      "rows": 29
+    }
+  },
+  "counts": {
+    "flats": 6,
+    "clients": 59,
+    "stays": 71,
+    "business_entries": 71,
+    "payments": 63,
+    "expenses": 23,
+    "migration_review": 33,
+    "historical_pending_candidates": 8
+  },
+  "pending_names": [
+    "Amjid Imroza",
+    "Maiz ullah Fareed bhai",
+    "Saddeq guest",
+    "Hassan molvi /shahzeb zada",
+    "Main Syed Ali shah",
+    "Khadem Khaksar",
+    "Riaz guest pesh",
+    "Abdul haq"
+  ],
+  "totals": {
+    "802-A": {
+      "business": 1296000,
+      "received": 1175000,
+      "pending": 121000,
+      "expenses": 139213,
+      "stays": 47,
+      "payments": 41,
+      "expense_rows": 15
+    },
+    "408-B": {
+      "business": 340000,
+      "received": 298000,
+      "pending": 42000,
+      "expenses": 26260,
+      "stays": 24,
+      "payments": 22,
+      "expense_rows": 8
+    },
+    "204-D": {
+      "business": 0,
+      "received": 0,
+      "pending": 0,
+      "expenses": 0,
+      "stays": 0,
+      "payments": 0,
+      "expense_rows": 0
+    },
+    "204-C": {
+      "business": 0,
+      "received": 0,
+      "pending": 0,
+      "expenses": 0,
+      "stays": 0,
+      "payments": 0,
+      "expense_rows": 0
+    },
+    "811-D": {
+      "business": 0,
+      "received": 0,
+      "pending": 0,
+      "expenses": 0,
+      "stays": 0,
+      "payments": 0,
+      "expense_rows": 0
+    },
+    "815-B": {
+      "business": 0,
+      "received": 0,
+      "pending": 0,
+      "expenses": 0,
+      "stays": 0,
+      "payments": 0,
+      "expense_rows": 0
+    }
+  },
+  "other_flats_zero": true
+}
