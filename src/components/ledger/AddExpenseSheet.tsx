@@ -76,6 +76,7 @@ export function AddExpenseSheet({
       <div className="space-y-3">
         <Field label="Flat *">
           <select className={fieldClass} value={flat} onChange={(event) => setFlat(event.target.value)}>
+            {activeFlats(state).length === 0 ? <option value="">Add apartment first</option> : null}
             {activeFlats(state).map((item) => (
               <option key={item.id} value={item.name}>
                 {item.name}

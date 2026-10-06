@@ -1,7 +1,5 @@
 import type { Flat, LedgerState } from "@/types";
 
-export const SEED_FLAT_NAMES = ["802-A", "408-B", "204-D", "204-C", "811-D", "815-B"] as const;
-
 export function normalizeFlatCode(value: string): string | null {
   const raw = value.trim().toUpperCase();
   if (!raw) return null;
@@ -47,24 +45,11 @@ export function flatHasHistory(state: LedgerState, flatId: string): boolean {
 }
 
 export function defaultFlatName(state: LedgerState): string {
-  return activeFlats(state)[0]?.name ?? state.flats[0]?.name ?? SEED_FLAT_NAMES[0];
+  return activeFlats(state)[0]?.name ?? "";
 }
 
 export function knownFlatNames(state: LedgerState): string[] {
   return state.flats.map((flat) => flat.name);
-}
-
-export function seedFlat(name: string, index: number, now = "2026-01-01T00:00:00.000Z"): Flat {
-  return {
-    id: flatIdForName(name),
-    name,
-    displayName: null,
-    sortOrder: index + 1,
-    active: true,
-    archivedAt: null,
-    createdAt: now,
-    updatedAt: now,
-  };
 }
 
 export function flatsForSelect(state: LedgerState, currentFlatId?: string | null): Flat[] {

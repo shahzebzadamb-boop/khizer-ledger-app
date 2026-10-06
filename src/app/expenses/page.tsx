@@ -83,6 +83,7 @@ export default function ExpensesPage() {
           ))}
         </select>
         <select className="w-full rounded-xl border border-border bg-input px-3 text-base" value={flat} onChange={(event) => setFlat(event.target.value)}>
+          {activeFlats(state).length === 0 ? <option value="">Add apartment first</option> : null}
           {activeFlats(state).map((item) => (
             <option key={item.id} value={item.name}>{item.name}</option>
           ))}

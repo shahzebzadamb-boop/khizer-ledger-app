@@ -1,6 +1,6 @@
 import { parseAmountToken } from "@/lib/money";
 import { normalizePhone } from "@/lib/phone";
-import { detectFlat, normalizeFlatName } from "@/lib/parse-quick-entry";
+import { detectFlat, matchKnownFlat, normalizeFlatName } from "@/lib/parse-quick-entry";
 import { canonicalReceiverName, detectReceiverName, DEFAULT_RECEIVER_NAME } from "@/lib/receivers";
 import type { ExpenseCategory, PaymentMethod } from "@/types";
 
@@ -67,7 +67,7 @@ function detectPhone(text: string): string | null {
   return match ? normalizePhone(match[0]) : null;
 }
 
-function detectFlats(text: string): string[] {
+function detectFlats(text: string, knownFlats: string[]): string[] {
   const found: string[] = [];
   const labeled = [...text.matchAll(/\bflat\s+([A-Za-z0-9-]+)/gi)];
   for (const match of labeled) {
@@ -77,7 +77,10 @@ function detectFlats(text: string): string[] {
   for (const match of loose) {
     found.push(normalizeFlatName(`${match[1]}${match[2]}`));
   }
-  return [...new Set(found)];
+  return [...new Set(found.flatMap((name) => {
+    const known = matchKnownFlat(name, knownFlats);
+    return known ? [known] : [];
+  }))];
 }
 
 function stripPhones(text: string): string {
@@ -193,8 +196,8 @@ export function looksLikeCorrection(text: string): boolean {
   return false;
 }
 
-function base(raw: string, known: { name: string }[]): Omit<CorrectionDraft, "kind"> & { kind?: CorrectionKind } {
-  const flats = detectFlats(raw);
+function base(raw: string, known: { name: string }[], knownFlats: string[]): Omit<CorrectionDraft, "kind"> & { kind?: CorrectionKind } {
+  const flats = detectFlats(raw, knownFlats);
   const money = amountList(raw, flats);
   const nights = nightsList(raw);
   const methods = detectMethods(raw);
@@ -206,7 +209,7 @@ function base(raw: string, known: { name: string }[]): Omit<CorrectionDraft, "ki
     raw,
     clientName: detectName(raw, known),
     phone: detectPhone(raw),
-    flat: flats[0] ?? detectFlat(raw),
+    flat: flats[0] ?? detectFlat(raw, knownFlats),
     amount: money[0] ?? null,
     newAmount: money[1] ?? null,
     nights: nights[0] ?? null,
@@ -224,13 +227,14 @@ function base(raw: string, known: { name: string }[]): Omit<CorrectionDraft, "ki
 
 export function parseCorrection(
   raw: string,
-  ctx: { knownClients?: { name: string; phone: string | null }[] } = {},
+  ctx: { knownClients?: { name: string; phone: string | null }[]; knownFlats?: string[] } = {},
 ): CorrectionDraft | { type: "ambiguous"; reason: string } {
   const text = raw.trim().replace(/\s+/g, " ");
   const known = ctx.knownClients ?? [];
-  const draft = base(text, known);
+  const knownFlats = ctx.knownFlats ?? [];
+  const draft = base(text, known, knownFlats);
   const expense = expenseHint(text);
-  const flats = detectFlats(text);
+  const flats = detectFlats(text, knownFlats);
   const money = amountList(text, flats);
   const nights = nightsList(text);
   const methods = detectMethods(text);

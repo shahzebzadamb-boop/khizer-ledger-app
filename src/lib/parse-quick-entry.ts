@@ -153,11 +153,14 @@ export function detectFlat(text: string, knownFlats: string[] = []): string | nu
   return null;
 }
 
-function matchKnownOrPattern(raw: string, knownFlats: string[]): string | null {
+export function matchKnownFlat(raw: string, knownFlats: string[]): string | null {
   const flat = normalizeFlatName(raw);
-  if (knownFlats.length === 0) return flat;
   const found = knownFlats.find((name) => flatMatchKey(name) === flatMatchKey(flat));
-  return found ?? flat;
+  return found ? normalizeFlatName(found) : null;
+}
+
+function matchKnownOrPattern(raw: string, knownFlats: string[]): string | null {
+  return matchKnownFlat(raw, knownFlats);
 }
 
 const RECEIVED_RE =

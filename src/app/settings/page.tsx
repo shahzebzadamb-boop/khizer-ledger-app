@@ -10,7 +10,14 @@ import { useLedger } from "@/lib/store";
 
 export default function SettingsPage() {
   const { state } = useLedger();
+  const [addApartment, setAddApartment] = useState(false);
   const receivers = state.receivers.filter((item) => item.active);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("addApartment") === "1") {
+      setAddApartment(true);
+    }
+  }, []);
 
   return (
     <div className="space-y-5">
@@ -18,7 +25,7 @@ export default function SettingsPage() {
 
       <section>
         <p className="kh-group-label">Properties</p>
-        <ApartmentsSettings />
+        <ApartmentsSettings addOpen={addApartment} onAddOpenChange={setAddApartment} />
       </section>
 
       <section>

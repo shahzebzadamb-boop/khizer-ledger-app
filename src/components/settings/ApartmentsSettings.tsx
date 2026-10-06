@@ -151,7 +151,7 @@ export function ApartmentsSettings({
             </div>
           </div>
         ))}
-        {active.length === 0 ? <p className="text-sm font-normal text-muted">No active apartments.</p> : null}
+        {active.length === 0 ? <p className="text-sm font-normal text-muted">No apartments yet</p> : null}
       </Card>
       {archived.length > 0 ? (
         <div className="space-y-2">

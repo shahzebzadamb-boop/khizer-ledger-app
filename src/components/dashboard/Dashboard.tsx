@@ -11,7 +11,7 @@ import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { SummaryCards } from "@/components/dashboard/SummaryCards";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { karachiYmd, pad2 } from "@/lib/dates";
-import { flatsForChips, flatsUsedInRange } from "@/lib/flats";
+import { activeFlats, flatsForChips, flatsUsedInRange } from "@/lib/flats";
 import {
   currentHomePeriod,
   isHistoricalRange,
@@ -23,9 +23,10 @@ import {
 import { dashboardTotals, needsAttention, stayLedgerRows } from "@/lib/ledger";
 import { useLedger } from "@/lib/store";
 import { PaymentReceiptNotice } from "@/components/receipts/PaymentReceiptNotice";
+import { Card } from "@/components/ui/Card";
 
 export function Dashboard() {
-  const { state } = useLedger();
+  const { state, ready } = useLedger();
   const [period, setPeriod] = useState<HomePeriod>(() => currentHomePeriod());
   const [selectedFlat, setSelectedFlat] = useState("all");
   const [toast, setToast] = useState(false);
@@ -69,6 +70,14 @@ export function Dashboard() {
           </>
         }
       />
+      {ready && activeFlats(state).length === 0 ? (
+        <Card className="space-y-3">
+          <p className="text-sm font-medium">No apartments yet</p>
+          <Link href="/settings?addApartment=1" className="kh-press kh-primary inline-flex min-h-11 w-full items-center justify-center rounded-xl px-3 text-sm font-semibold">
+            + Add Apartment
+          </Link>
+        </Card>
+      ) : null}
       {reviewCount > 0 ? (
         <Link href="/migration" className="text-sm font-medium text-warning">
           Migration review ({reviewCount})

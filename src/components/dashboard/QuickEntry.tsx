@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { availableForWithdrawal, matchClient, paymentStayChoices, uniquePaymentStayId } from "@/lib/ledger";
-import { knownFlatNames } from "@/lib/flats";
+import { activeFlats, knownFlatNames } from "@/lib/flats";
 import {
   correctionPreview,
   correctionQuestion,
@@ -221,6 +221,10 @@ export function QuickEntry({ onAdded }: { onAdded: (info?: AddedReceiptInfo) => 
       "needsPhone" in parsed && parsed.needsPhone
         ? { ...parsed, phone: phonePrompt.trim(), needsPhone: false }
         : parsed;
+    if (activeFlats(state).length === 0 && (next.type === "rent" || next.type === "extension" || next.type === "security")) {
+      setError("Add apartment first");
+      return;
+    }
     if (next.type === "correction") {
       const chosen = selectedCorrection ?? uniqueTarget(correctionChoices);
       if (!chosen) {

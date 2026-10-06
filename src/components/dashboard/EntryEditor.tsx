@@ -155,6 +155,7 @@ function StayFields({
       </Field>
       <Field label="Flat">
         <select className={inputClass} value={flat} onChange={(event) => setFlat(event.target.value)}>
+          {flatsForSelect(state, stay.flatId).length === 0 ? <option value="">Add apartment first</option> : null}
           {flatsForSelect(state, stay.flatId).map((item) => (
             <option key={item.id} value={item.name}>
               {item.name}
@@ -321,6 +322,7 @@ function ExpenseFields({
       </Field>
       <Field label="Flat">
         <select className={inputClass} value={flat} onChange={(event) => setFlat(event.target.value)}>
+          {flatsForSelect(state, expense.flatId).length === 0 ? <option value="">Add apartment first</option> : null}
           {flatsForSelect(state, expense.flatId).map((item) => (
             <option key={item.id} value={item.name}>
               {item.name}
@@ -393,6 +395,7 @@ function SecurityFields({
       <MoneyInput label="Amount" value={amount} allowZero={false} onChange={setAmount} />
       <Field label="Flat">
         <select className={inputClass} value={flat} onChange={(event) => setFlat(event.target.value)}>
+          {flatsForSelect(state, row.flatId).length === 0 ? <option value="">Add apartment first</option> : null}
           {flatsForSelect(state, row.flatId).map((item) => (
             <option key={item.id} value={item.name}>
               {item.name}

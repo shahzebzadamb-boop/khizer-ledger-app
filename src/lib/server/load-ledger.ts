@@ -81,18 +81,16 @@ export async function loadLedgerState(): Promise<LedgerState> {
 
   const empty = emptyLedgerState();
   const state = normalizeState({
-    flats: flats.length
-      ? flats.map((row) => ({
-          id: String(row.id),
-          name: String(row.name),
-          displayName: row.displayName ? String(row.displayName) : null,
-          sortOrder: Number(row.sortOrder),
-          active: row.active == null ? true : asBool(row.active),
-          archivedAt: row.archivedAt ? toIso(row.archivedAt) : null,
-          createdAt: row.createdAt ? toIso(row.createdAt) : "2026-01-01T00:00:00.000Z",
-          updatedAt: row.updatedAt ? toIso(row.updatedAt) : row.createdAt ? toIso(row.createdAt) : "2026-01-01T00:00:00.000Z",
-        }))
-      : empty.flats,
+    flats: flats.map((row) => ({
+      id: String(row.id),
+      name: String(row.name),
+      displayName: row.displayName ? String(row.displayName) : null,
+      sortOrder: Number(row.sortOrder),
+      active: row.active == null ? true : asBool(row.active),
+      archivedAt: row.archivedAt ? toIso(row.archivedAt) : null,
+      createdAt: row.createdAt ? toIso(row.createdAt) : "2026-01-01T00:00:00.000Z",
+      updatedAt: row.updatedAt ? toIso(row.updatedAt) : row.createdAt ? toIso(row.createdAt) : "2026-01-01T00:00:00.000Z",
+    })),
     receivers: receivers.length
       ? receivers.map((row) => ({
           id: String(row.id),
