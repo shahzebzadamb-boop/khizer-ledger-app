@@ -18,6 +18,31 @@ export function isDatabaseConfigured(): boolean {
 }
 
 let pool: mysql.Pool | null = null;
+let lastFailureCode: string | null = null;
+
+function sanitizeDatabaseMessage(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error ?? "unknown");
+  return message.replace(/password[=:]\s*\S+/gi, "password=[redacted]");
+}
+
+export function logDatabaseFailure(scope: string, error: unknown): void {
+  const details = error as { code?: unknown; errno?: unknown; sqlState?: unknown };
+  const code = typeof details.code === "string" && details.code ? details.code : "unknown";
+  lastFailureCode = code;
+  const errno = details.errno ?? "none";
+  const sqlState = details.sqlState ?? "none";
+  console.error(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      level: "ERROR",
+      message: `[khizer-db] ${scope} code=${code} errno=${errno} sqlState=${sqlState} message=${sanitizeDatabaseMessage(error)}`,
+    }),
+  );
+}
+
+export function lastDatabaseFailureCode(): string | null {
+  return lastFailureCode;
+}
 
 export function getPool(): mysql.Pool {
   if (!isDatabaseConfigured()) {
@@ -46,8 +71,10 @@ export async function pingDatabase(): Promise<boolean> {
     const connection = await getPool().getConnection();
     await connection.query("SELECT 1");
     connection.release();
+    lastFailureCode = null;
     return true;
-  } catch {
+  } catch (error) {
+    logDatabaseFailure("ping", error);
     return false;
   }
 }

@@ -61,7 +61,12 @@ export function ApartmentsSettings({
       return;
     }
     setError(null);
-    await persist({ type: "ADD_FLAT", payload: { name, displayName: displayName.trim() || null } });
+    try {
+      await persist({ type: "ADD_FLAT", payload: { name, displayName: displayName.trim() || null } });
+    } catch {
+      setError("Couldn't save. Please try again.");
+      return;
+    }
     setCode("");
     setDisplayName("");
     setOpen(false);
@@ -71,7 +76,12 @@ export function ApartmentsSettings({
     if (!editing) return;
     setEditError(null);
     if (editingLocked) {
-      await persist({ type: "UPDATE_FLAT", payload: { flatId: editing.id, displayName: editDisplay } });
+      try {
+        await persist({ type: "UPDATE_FLAT", payload: { flatId: editing.id, displayName: editDisplay } });
+      } catch {
+        setEditError("Couldn't save. Please try again.");
+        return;
+      }
       setEditId(null);
       return;
     }
@@ -85,7 +95,12 @@ export function ApartmentsSettings({
       setEditError(`${existing.name} already exists.`);
       return;
     }
-    await persist({ type: "UPDATE_FLAT", payload: { flatId: editing.id, name: nextName, displayName: editDisplay } });
+    try {
+      await persist({ type: "UPDATE_FLAT", payload: { flatId: editing.id, name: nextName, displayName: editDisplay } });
+    } catch {
+      setEditError("Couldn't save. Please try again.");
+      return;
+    }
     setEditId(null);
   }
 

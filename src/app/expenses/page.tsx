@@ -23,6 +23,7 @@ export default function ExpensesPage() {
   const [flat, setFlat] = useState(defaultFlatName(state));
   const [editId, setEditId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const expenses = [...state.expenses].filter((item) => !item.voided).sort((a, b) => (a.spentAt < b.spentAt ? 1 : -1));
   const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
@@ -33,6 +34,7 @@ export default function ExpensesPage() {
     lock.current = true;
     setSaving(true);
     (document.activeElement as HTMLElement | null)?.blur?.();
+    setError(null);
     try {
       await persist({
         type: "ADD_EXPENSE",
@@ -40,6 +42,8 @@ export default function ExpensesPage() {
       });
       setAmount("");
       setDescription("");
+    } catch {
+      setError("Couldn't save. Please try again.");
     } finally {
       lock.current = false;
       setSaving(false);
@@ -54,6 +58,7 @@ export default function ExpensesPage() {
         <p className="money mt-1.5 text-xl">{formatPKR(total)}</p>
       </Card>
       <Card className="space-y-3">
+        {error ? <p className="text-sm font-normal text-warning">{error}</p> : null}
         <input
           placeholder="Description"
           className="w-full rounded-xl border border-border bg-input px-3 text-base"

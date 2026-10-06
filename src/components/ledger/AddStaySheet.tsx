@@ -112,7 +112,7 @@ export function AddStaySheet({
       onAdded?.({ receiptId: newestCreatedReceipt(before, next)?.id ?? null });
       onClose();
     } catch {
-      setError("Save failed.");
+      setError("Couldn't save. Please try again.");
       lock.current = false;
       setSaving(false);
     }

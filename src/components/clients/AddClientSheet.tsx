@@ -39,7 +39,7 @@ export function AddClientSheet({ onClose }: { onClose: () => void }) {
       onClose();
       if (created) router.push(`/clients/${created.id}`);
     } catch {
-      setError("Save failed.");
+      setError("Couldn't save. Please try again.");
       setSaving(false);
     }
   }

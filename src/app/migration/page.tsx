@@ -154,7 +154,7 @@ function ReviewCard({
       onUpdated();
     } catch {
       setSaveFailed(true);
-      setError("Save failed. Your text is still here.");
+      setError("Couldn't save. Please try again.");
     } finally {
       setSaving(false);
     }

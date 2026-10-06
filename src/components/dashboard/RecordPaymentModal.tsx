@@ -32,6 +32,7 @@ export function RecordPaymentModal({
   );
   const [overpayOk, setOverpayOk] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const value = parseFormAmount(amount, false);
   const extra = value != null && remaining > 0 && value > remaining ? value - remaining : 0;
 
@@ -53,6 +54,7 @@ export function RecordPaymentModal({
     } catch {
       lock.current = false;
       setSaving(false);
+      setError("Couldn't save. Please try again.");
     }
   }
 
@@ -60,6 +62,7 @@ export function RecordPaymentModal({
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center">
       <div className="w-full max-w-lg rounded-2xl border border-border bg-surface p-4">
         <h3 className="section-title">Record payment</h3>
+        {error ? <p className="mt-2 text-sm font-normal text-warning">{error}</p> : null}
         <p className="mt-1 text-sm font-normal text-muted">
           {clientName} · remaining {formatPKR(remaining)}
         </p>

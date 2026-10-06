@@ -34,6 +34,7 @@ export function EntryEditor({
   const [confirmSave, setConfirmSave] = useState(false);
   const [confirmVoid, setConfirmVoid] = useState(false);
   const [toast, setToast] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   const stay = state.stays.find((item) => item.id === id);
@@ -48,6 +49,7 @@ export function EntryEditor({
     (document.activeElement as HTMLElement | null)?.blur?.();
     try {
       await persist(action);
+      setError(null);
       setToast(true);
       window.setTimeout(() => {
         setToast(false);
@@ -57,6 +59,7 @@ export function EntryEditor({
       lock.current = false;
       setSaving(false);
       setConfirmSave(false);
+      setError("Couldn't save. Please try again.");
     }
   }
 
@@ -64,6 +67,7 @@ export function EntryEditor({
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center">
       <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-4">
         {toast ? <p className="toast-ok mb-3">✓ Updated</p> : null}
+        {error ? <p className="mb-3 text-sm font-normal text-warning">{error}</p> : null}
         {kind === "stay" && stay ? (
           <StayFields stay={stay} confirmSave={confirmSave} setConfirmSave={setConfirmSave} onSave={save} />
         ) : null}

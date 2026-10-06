@@ -64,7 +64,7 @@ export function AddExpenseSheet({
       onAdded?.();
       onClose();
     } catch {
-      setError("Save failed.");
+      setError("Couldn't save. Please try again.");
       lock.current = false;
       setSaving(false);
     }
